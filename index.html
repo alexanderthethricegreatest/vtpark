@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virginia Technology Park — A Public Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3d;
+    --ink-muted: #6b6b6b;
+    --rule: #d0cdc8;
+    --rule-light: #e8e5e0;
+    --bg: #faf8f5;
+    --bg-warm: #f2efe9;
+    --bg-card: #ffffff;
+    --accent: #b5341a;
+    --accent-light: #f5ece9;
+    --flag: #c8a84b;
+    --flag-light: #fdf7e8;
+    --serif: 'Libre Baskerville', Georgia, serif;
+    --sans: 'Source Sans 3', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 17px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+  /* ── MASTHEAD ── */
+  .masthead { background: var(--ink); color: #fff; border-bottom: 4px solid var(--accent); }
+  .masthead-inner { max-width: 900px; margin: 0 auto; padding: 48px 32px 40px; }
+  .masthead-byline { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--flag); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+  .masthead-byline::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.15); }
+  .masthead h1 { font-family: var(--serif); font-size: clamp(26px, 4vw, 42px); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 20px; }
+  .masthead-sub { font-family: var(--sans); font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.7); max-width: 620px; line-height: 1.6; margin-bottom: 32px; }
+  .masthead-meta { display: flex; gap: 24px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 20px; }
+  .meta-item { font-family: var(--sans); font-size: 12px; color: rgba(255,255,255,0.5); display: flex; flex-direction: column; gap: 3px; }
+  .meta-item strong { color: rgba(255,255,255,0.85); font-weight: 600; font-size: 13px; }
+
+  /* ── CONTENT ── */
+  .content { max-width: 900px; margin: 0 auto; padding: 40px 32px 80px; }
+
+  /* ── LEDE ── */
+  .lede { background: var(--accent-light); border-left: 4px solid var(--accent); padding: 24px 28px; margin-bottom: 32px; }
+  .lede p { font-family: var(--serif); font-size: 17px; line-height: 1.65; font-style: italic; }
+  .lede p + p { margin-top: 10px; }
+
+  /* ── KEY FACTS ── */
+  .key-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-bottom: 40px; }
+  .fact { background: var(--bg-card); padding: 20px 16px; text-align: center; }
+  .fact-number { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 5px; letter-spacing: -0.02em; }
+  .fact-label { font-family: var(--sans); font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); line-height: 1.4; }
+
+  /* ── ACCORDION ── */
+  .accordion-group { display: flex; flex-direction: column; gap: 6px; }
+  .accordion { border: 1px solid var(--rule); background: var(--bg-card); overflow: hidden; }
+  .accordion.open { border-color: #999; }
+  .accordion-trigger { width: 100%; background: none; border: none; cursor: pointer; padding: 18px 22px; display: flex; align-items: center; gap: 14px; text-align: left; transition: background 0.15s; }
+  .accordion-trigger:hover { background: var(--bg-warm); }
+  .accordion.open .accordion-trigger { background: var(--bg-warm); border-bottom: 1px solid var(--rule-light); }
+  .acc-num { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); flex-shrink: 0; width: 24px; }
+  .accordion.open .acc-num { color: var(--accent); }
+  .acc-title { font-family: var(--serif); font-size: 16px; font-weight: 700; color: var(--ink); flex: 1; line-height: 1.3; }
+  .acc-subtitle { font-family: var(--sans); font-size: 11.5px; color: var(--ink-muted); flex-shrink: 0; max-width: 220px; text-align: right; line-height: 1.35; display: none; }
+  @media (min-width: 640px) { .acc-subtitle { display: block; } }
+  .acc-chevron { flex-shrink: 0; width: 18px; height: 18px; color: var(--ink-muted); transition: transform 0.22s ease; }
+  .accordion.open .acc-chevron { transform: rotate(180deg); color: var(--accent); }
+  .accordion-body { display: none; padding: 24px 24px 28px 60px; }
+  .accordion.open .accordion-body { display: block; }
+  .accordion-body p { font-family: var(--sans); font-size: 14.5px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 12px; max-width: 660px; }
+  .accordion-body p:last-child { margin-bottom: 0; }
+  .accordion-body h3 { font-family: var(--serif); font-size: 15px; font-weight: 700; color: var(--ink); margin: 20px 0 8px; }
+
+  /* ── INLINE CITATION ── */
+  .cite {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: #4a2c0a;
+    background: #f0e4c8;
+    border: 1px solid #d4b87a;
+    border-radius: 3px;
+    padding: 1px 6px;
+    margin: 0 2px;
+    cursor: pointer;
+    white-space: nowrap;
+    vertical-align: baseline;
+    transition: background 0.15s, border-color 0.15s;
+    text-decoration: none;
+  }
+  .cite:hover {
+    background: #e6d4a8;
+    border-color: #b8963c;
+  }
+  /* Citation with no image yet — slightly dimmer */
+  .cite.placeholder {
+    color: #7a6040;
+    background: #f7f0e0;
+    border-color: #e0ceaa;
+    border-style: dashed;
+  }
+  /* External source citation — slightly different tint */
+  .cite.external {
+    color: #1a3a5c;
+    background: #e8f0f8;
+    border-color: #a8c0d8;
+  }
+  .cite.external:hover { background: #d4e4f4; border-color: #7a9fc0; }
+
+  /* ── BIBLIOGRAPHY ── */
+  .bibliography { margin-top: 24px; border-top: 1px solid var(--rule); padding-top: 20px; }
+  .bibliography-title { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 14px; }
+  .bib-list { list-style: none; }
+  .bib-item { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--rule-light); align-items: flex-start; }
+  .bib-item:last-child { border-bottom: none; }
+  .bib-num { font-family: var(--sans); font-size: 11px; font-weight: 700; color: var(--ink-muted); flex-shrink: 0; width: 20px; padding-top: 1px; }
+  .bib-text { font-family: var(--sans); font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; flex: 1; }
+  .bib-text a { color: var(--accent); text-decoration: none; word-break: break-all; }
+  .bib-text a:hover { text-decoration: underline; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 8, 5, 0.88);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    cursor: pointer;
+  }
+  .lightbox-overlay.active { display: flex; }
+
+  .lightbox-box {
+    background: var(--bg-card);
+    max-width: 860px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    animation: lbIn 0.18s ease;
+  }
+  @keyframes lbIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+
+  .lightbox-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--rule);
+    flex-shrink: 0;
+  }
+  .lightbox-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .lightbox-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--ink-muted);
+    line-height: 1;
+    padding: 0 4px;
+    transition: color 0.15s;
+  }
+  .lightbox-close:hover { color: var(--ink); }
+
+  .lightbox-img-wrap {
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px;
+    background: #f0ede8;
+  }
+  .lightbox-img-wrap img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  /* Placeholder state when no image file yet */
+  .lightbox-placeholder {
+    width: 100%;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--ink-muted);
+    font-family: var(--sans);
+    font-size: 14px;
+    text-align: center;
+  }
+  .lightbox-placeholder .ph-icon { font-size: 36px; opacity: 0.4; }
+  .lightbox-placeholder code {
+    font-size: 12px;
+    background: var(--rule-light);
+    padding: 3px 8px;
+    border-radius: 3px;
+    color: var(--ink-soft);
+  }
+
+  .lightbox-caption {
+    padding: 12px 18px;
+    border-top: 1px solid var(--rule);
+    flex-shrink: 0;
+  }
+  .lightbox-caption-title {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .lightbox-caption-source {
+    font-family: var(--sans);
+    font-size: 11.5px;
+    color: var(--ink-muted);
+  }
+
+  /* ── CALLOUT ── */
+  .callout { background: var(--flag-light); border: 1px solid #e8d8a0; border-left: 4px solid var(--flag); padding: 16px 20px; margin-top: 16px; }
+  .callout-label { font-family: var(--sans); font-size: 9.5px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #8a6f1e; margin-bottom: 7px; }
+  .callout p { font-family: var(--sans) !important; font-size: 13.5px !important; color: #3d3010 !important; max-width: none !important; margin-bottom: 7px !important; line-height: 1.6 !important; }
+  .callout p:last-child { margin-bottom: 0 !important; }
+
+  /* ── ALERT ── */
+  .alert { background: #fff8f7; border: 1px solid #f0c4bc; border-left: 4px solid var(--accent); padding: 12px 16px; margin-top: 14px; display: flex; gap: 10px; align-items: flex-start; }
+  .alert-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .alert p { font-family: var(--sans) !important; font-size: 13px !important; color: #5c1a0f !important; margin: 0 !important; max-width: none !important; line-height: 1.55 !important; }
+
+  /* ── MISSING LIST ── */
+  .missing-list { list-style: none; margin-top: 10px; }
+  .missing-list li { font-family: var(--sans); font-size: 14px; color: var(--ink-soft); padding: 9px 10px 9px 32px; border-bottom: 1px solid var(--rule-light); position: relative; line-height: 1.5; }
+  .missing-list li::before { content: '✕'; position: absolute; left: 8px; color: var(--accent); font-weight: 700; font-size: 11px; top: 11px; }
+  .missing-list li:last-child { border-bottom: none; }
+
+  /* ── STAT ROW ── */
+  .stat-row { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+  .stat-block { flex: 1; min-width: 140px; background: var(--bg-warm); border: 1px solid var(--rule); padding: 16px 18px; }
+  .stat-block .num { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--ink); line-height: 1; letter-spacing: -0.03em; margin-bottom: 4px; }
+  .stat-block .num span { font-size: 17px; color: var(--ink-muted); }
+  .stat-block .desc { font-family: var(--sans); font-size: 11.5px; color: var(--ink-muted); line-height: 1.45; }
+
+  /* ── FAILURE CARDS ── */
+  .failures-grid { display: grid; gap: 10px; margin-top: 14px; }
+  .failure-card { background: var(--bg); border: 1px solid var(--rule); border-top: 3px solid var(--accent); padding: 16px 18px; }
+  .failure-num { font-family: var(--sans); font-size: 9.5px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 5px; }
+  .failure-card h3 { font-family: var(--serif); font-size: 14.5px; font-weight: 700; margin-bottom: 6px; color: var(--ink); line-height: 1.3; }
+  .failure-card p { font-family: var(--sans) !important; font-size: 13px !important; color: var(--ink-soft) !important; line-height: 1.6 !important; max-width: none !important; margin-bottom: 5px !important; }
+  .failure-card p:last-child { margin-bottom: 0 !important; }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; margin-top: 16px; padding-left: 26px; }
+  .timeline::before { content: ''; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 2px; background: var(--rule); }
+  .tl-item { position: relative; padding-bottom: 26px; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot { position: absolute; left: -22px; top: 5px; width: 11px; height: 11px; border-radius: 50%; background: var(--rule); border: 2px solid var(--bg-card); box-shadow: 0 0 0 2px var(--rule); }
+  .tl-item.completed .tl-dot { background: var(--ink-muted); box-shadow: 0 0 0 2px var(--ink-muted); }
+  .tl-item.active .tl-dot { background: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+  .tl-item.decision .tl-dot { background: var(--flag); box-shadow: 0 0 0 2px var(--flag); width: 13px; height: 13px; left: -23px; top: 4px; }
+  .tl-item.pending .tl-dot { background: var(--bg-card); box-shadow: 0 0 0 2px var(--rule); }
+  .tl-tag { display: inline-block; font-family: var(--sans); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 6px; margin-bottom: 3px; }
+  .tag-done { background: #e8e5e0; color: var(--ink-muted); }
+  .tag-active { background: var(--accent-light); color: var(--accent); }
+  .tag-pending { background: var(--flag-light); color: #8a6f1e; border: 1px solid #e8d8a0; }
+  .tl-date { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 2px; }
+  .tl-item.active .tl-date { color: var(--accent); }
+  .tl-item.decision .tl-date { color: #8a6f1e; }
+  .tl-title { font-family: var(--serif); font-size: 14.5px; font-weight: 700; color: var(--ink); margin-bottom: 3px; line-height: 1.3; }
+  .tl-item.pending .tl-title { color: var(--ink-muted); }
+  .tl-body { font-family: var(--sans); font-size: 13px; color: var(--ink-soft); line-height: 1.6; max-width: 580px; }
+  .tl-item.pending .tl-body { color: var(--ink-muted); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--ink); color: rgba(255,255,255,0.55); font-family: var(--sans); font-size: 13px; padding: 36px 32px; margin-top: 60px; }
+  .footer-inner { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap; }
+  .footer-org { color: #fff; font-weight: 600; font-size: 15px; margin-bottom: 4px; font-family: var(--serif); }
+  footer a { color: var(--flag); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── WHAT YOU CAN DO ── */
+  .action-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 16px; }
+  @media (min-width: 560px) { .action-grid { grid-template-columns: 1fr 1fr; } }
+
+  .action-card {
+    border: 1px solid var(--rule);
+    padding: 18px 20px;
+    background: var(--bg-card);
+    position: relative;
+  }
+
+  .action-card.primary {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .action-step {
+    font-family: var(--sans);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+  .action-card.primary .action-step { color: var(--accent); }
+
+  .action-title {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .action-desc {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .action-link {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+  }
+  .action-link:hover { text-decoration: underline; }
+  .action-card.primary .action-link { color: var(--accent-dark, #8c2612); }
+
+  .supervisor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .supervisor-card {
+    background: var(--bg-warm);
+    border: 1px solid var(--rule);
+    padding: 12px 14px;
+  }
+
+  .sup-name {
+    font-family: var(--serif);
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .sup-district {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .sup-district.stonewall { color: var(--accent); font-weight: 600; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    .masthead-inner, .content { padding-left: 16px; padding-right: 16px; }
+    .accordion-body { padding-left: 16px; padding-right: 16px; }
+    .key-facts { grid-template-columns: repeat(2, 1fr); }
+    .stat-row { flex-direction: column; }
+    .acc-num { display: none; }
+    .lightbox-box { max-height: 95vh; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =====================================================================
+     CITATION REGISTRY
+     To add a real screenshot: set "img" to the filename (e.g. "proffer-2g.png")
+     and place that file in the same folder as this HTML file.
+     Leave img as "" to show a placeholder until the file is ready.
+     ===================================================================== -->
+<script>
+const CITATIONS = {
+  /* ── PROFFER STATEMENT ── */
+  "proffer-p1":      { label: "Proffer Statement, p.1",       img: "", caption: "Proffer Statement cover page identifying Executive Land Holdings IV, LLC as applicant and listing record owners.", source: "Proffer Statement, p.1" },
+  "proffer-1d":      { label: "Proffer §1.D",                 img: "", caption: "Section 1.D classifying three 300 MW substations as 'accessory uses' customarily associated with technology industrial and manufacturing parks.", source: "Proffer Statement, Section 1.D" },
+  "proffer-1e":      { label: "Proffer §1.E",                 img: "", caption: "Section 1.E referencing traffic modeling limited to construction-phase and trip-generation only.", source: "Proffer Statement, Section 1.E" },
+  "proffer-2c":      { label: "Proffer §2.C",                 img: "", caption: "Section 2.C restricting generator testing to weekdays 8am–5pm, excluding major holidays.", source: "Proffer Statement, Section 2.C" },
+  "proffer-2d":      { label: "Proffer §2.D",                 img: "", caption: "Section 2.D permitting generator operation outside restricted hours during any 'emergency.'", source: "Proffer Statement, Section 2.D" },
+  "proffer-2e":      { label: "Proffer §2.E",                 img: "", caption: "Section 2.E listing equipment requirements: low noise emission fans, acoustical wraps for compressors and oil separators, acoustic perimeter for cooling equipment.", source: "Proffer Statement, Section 2.E" },
+  "proffer-2g":      { label: "Proffer §2.G",                 img: "", caption: "Section 2.G establishing a 70 dBA property line noise limit.", source: "Proffer Statement, Section 2.G" },
+  "proffer-6":       { label: "Proffer §6",                   img: "", caption: "Section 6 committing to a fire and rescue contribution of $150 per 1,000 gross square feet of constructed building, paid at certificate of occupancy.", source: "Proffer Statement, Section 6" },
+  "proffer-7d":      { label: "Proffer §7.D",                 img: "", caption: "Section 7.D listing water minimization strategies the applicant 'may' employ: closed loop systems, air-cooled systems, direct liquid cooling, and immersion cooling.", source: "Proffer Statement, Section 7.D" },
+  "proffer-8":       { label: "Proffer §8",                   img: "", caption: "Section 8 committing to an Architectural Resources Study and Phase II interior study of both historic houses prior to first MDP approval.", source: "Proffer Statement, Section 8" },
+  "proffer-9":       { label: "Proffer §9",                   img: "", caption: "Section 9 addressing CPI adjustment for proffer contributions paid more than twelve months after approval.", source: "Proffer Statement, Section 9" },
+
+  /* ── HRAB APPLICATION ── */
+  "hrab-app-p2":     { label: "HRAB Application, p.2",        img: "", caption: "HRAB Application page 2 identifying J. Randall Minchew of Walsh, Colucci, Lubeley & Walsh as land use attorney of record.", source: "HRAB Application, p.2" },
+  "hrab-app-p2-3":   { label: "HRAB Application, pp.2–3",     img: "", caption: "HRAB Application pages 2–3 describing the rezoning from RA to TM across 238.57 acres.", source: "HRAB Application, pp.2–3" },
+  "hrab-app-sig":    { label: "HRAB Application, pp.4–4A",    img: "", caption: "HRAB Application signature pages showing John Knott signing as Vice President of Executive Land Holdings IV, LLC and simultaneously as Attorney-in-Fact for each record owner.", source: "HRAB Application, pp.4–4A" },
+
+  /* ── HRAB COVER MEMO ── */
+  "hrab-memo-p1":    { label: "HRAB Cover Memo, p.1",         img: "", caption: "HRAB Item #2 Cover Memo page 1 noting that Proffer #8 incorporates language from the previous July 25, 2022 HRAB comment letter.", source: "HRAB Item #2 Cover Memo, p.1" },
+  "hrab-dhr":        { label: "HRAB Cover Memo — DHR",        img: "", caption: "HRAB Cover Memo identifying DHR resources #034-1463 (Lewis-Solenberger House) and #034-1464 (Cather House) on the property.", source: "HRAB Cover Memo, p.1" },
+
+  /* ── PREVIOUS HRAB LETTER ── */
+  "hrab-2022":       { label: "HRAB Letter, July 25, 2022",   img: "", caption: "Previous HRAB comment letter dated July 25, 2022 recommending a Phase II study of the interiors and building materials of both historic houses.", source: "Previous HRAB Comment Letter, July 25, 2022" },
+
+  /* ── IMPACT ANALYSIS ── */
+  "impact-soils":    { label: "Impact Analysis, p.2 — Soils", img: "", caption: "Impact Analysis page 2 identifying Frederick Poplimento Loams, Oaklet Silt Loams, and Carbo-Oaklet Silt Loams on the parcels.", source: "Impact Analysis Statement, p.2" },
+  "impact-agmodel":  { label: "Impact Analysis, p.2 — Ag Map",img: "", caption: "Impact Analysis page 2 referencing the Virginia Agricultural Model map designation of 'prime farmland and farmland of statewide importance.'", source: "Impact Analysis Statement, p.2" },
+  "impact-woods":    { label: "Impact Analysis, p.2 — Woodlands", img: "", caption: "Impact Analysis page 2 noting approximately 54 acres of woodlands on the parcels.", source: "Impact Analysis Statement, p.2" },
+  "impact-water":    { label: "Impact Analysis, p.3 — Water", img: "", caption: "Impact Analysis page 3 disclosing hydrant flow tests of 950 and 1,005 GPM described as 'barely meeting Frederick Water's minimal flow requirements,' and acknowledging water system expansion will be required.", source: "Impact Analysis Statement, p.3" },
+  "impact-users":    { label: "Impact Analysis, p.3 — End Users", img: "", caption: "Impact Analysis page 3 stating that 'the end users of the industrial development on the Property have not been identified.'", source: "Impact Analysis Statement, p.3" },
+
+  /* ── NOISE / ENIA ── */
+  "enia-summary":    { label: "ENIA Summary, p.1",            img: "", caption: "Environmental Noise Impact Assessment summary page concluding that with mitigation the property line noise level can be brought to 70 dBA.", source: "ENIA Summary, p.1" },
+  "enia-conclusions":{ label: "ENIA Conclusions, p.4",        img: "", caption: "ENIA Conclusions page 4 stating that 'since many assumptions about the site were made, an additional acoustical analysis of the final design will be necessary to demonstrate final compliance to local noise code.'", source: "ENIA Conclusions, p.4" },
+  "enia-discussion": { label: "ENIA Discussion, p.1",         img: "", caption: "ENIA Data and Discussion page 1 noting the noise modeling was run on a hypothetical building layout.", source: "ENIA Data and Discussion, p.1" },
+
+  /* ── GDP / SITE PLANS ── */
+  "gdp-c3":          { label: "GDP Sheet C-3",                img: "", caption: "Generalized Development Plan Sheet C-3 showing eleven data center buildings and three 300 MW electrical substations.", source: "GDP Sheet C-3" },
+  "gdp-c4":          { label: "GDP Overall Plan C-4",         img: "", caption: "Overall Illustrative Plan C-4 showing the site layout including building footprints and substation locations.", source: "Overall Illustrative Plan C-4" },
+
+  /* ── DHR SURVEY FORMS ── */
+  "dhr-1463":        { label: "DHR Survey #034-1463",         img: "", caption: "DHR Survey Form for the Lewis-Solenberger House (034-1463) at 384 Ruebuck Lane, constructed circa 1800, assessed at reconnaissance level as 'recommended not eligible' for the National Register.", source: "DHR Survey Form 034-1463, p.1" },
+  "dhr-1464":        { label: "DHR Survey #034-1464",         img: "", caption: "DHR Survey Form for the Cather House (034-1464) at 257 Ruebuck Lane, constructed circa 1800, assessed at reconnaissance level as 'recommended not eligible' for the National Register.", source: "DHR Survey Form 034-1464, p.1" },
+
+  /* ── GRID IMPACT BIBLIOGRAPHY ── (external sources — no screenshot, opens URL) */
+  "ext-1":  { label: "Source [1] — REC / Richmond Times-Dispatch",  img: "", url: "https://dailyprogress.com/news/state-regional/business/article_32da447d-6958-57c7-9821-2bd208b3ec25.html", caption: "Biller, T.E. (2025). Virginia co-op proposes path to keep data centers from boosting electric bills. Reports REC's current peak system demand of ~948 MW and expectation of up to 17 GW of data center demand by 2040.", source: "Richmond Times-Dispatch / Daily Progress, April 11, 2025" },
+  "ext-2":  { label: "Source [2] — Virginia Mercury",               img: "", url: "https://virginiamercury.com/2025/04/25/will-special-rate-classes-protect-va-residents-from-the-costs-of-serving-data-centers/", caption: "Main, I. (2025). Will special rate classes protect Va. residents from the costs of serving data centers? Reports that residential customers will pay 55% of Dominion's $7.6B in planned transmission infrastructure.", source: "Virginia Mercury, April 25, 2025" },
+  "ext-3":  { label: "Source [3] — POWWR / PJM Load Forecast",      img: "", url: "https://www.powwr.com/blog/how-data-centers-are-reshaping-pjms-energy-market", caption: "POWWR (2025). How Data Centers Are Reshaping PJM's Energy Market. Reports PJM's 2025 Long-Term Load Forecast projecting 32 GW of peak load growth by 2030 with data centers responsible for 94%.", source: "POWWR, November 10, 2025" },
+  "ext-4":  { label: "Source [4] — Data Center Dynamics / Dominion", img: "", url: "https://www.datacenterdynamics.com/en/news/dominion-to-build-new-high-voltage-lines-to-supply-proposed-900mw-data-center-in-chesterfield-county-virginia/", caption: "Data Center Dynamics (2025). Dominion to build new high voltage lines to supply proposed 900MW data center in Chesterfield County, Virginia. Dominion filed to construct seven miles of new high-voltage transmission lines at an estimated cost of $121 million.", source: "Data Center Dynamics, March 2025" },
+  "ext-5":  { label: "Source [5] — Utility Dive / PJM Ratepayers",  img: "", url: "https://www.utilitydive.com/news/solving-pjms-data-center-problem/805600/", caption: "Rutigliano & Lang-Ree (2025). Solving PJM's data center problem. Reports that the 67 million people served by PJM were hit with an extra $9.4 billion in electricity bills as proposed data centers drove up prices.", source: "Utility Dive, December 2, 2025" },
+  "ext-6":  { label: "Source [6] — Technical.ly / PJM Capacity Auction", img: "", url: "https://technical.ly/civics/pjm-data-center-electric-grid-ferc-proposal/", caption: "Eberhart, M. (2025). States and residents push back on PJM data center decisions. Reports that PJM's capacity auction clearing price jumped to $329.17/MW-day for 2026–2027, more than ten times the $28.92 price for 2024–2025.", source: "Technical.ly, December 5, 2025" },
+  "ext-7":  { label: "Source [7] — Baker Botts / PJM Reserve Margin", img: "", url: "https://www.bakerbotts.com/thought-leadership/publications/2025/december/ferc-issues-order-providing-guidance-for-co-locating-power-plants-with-data-centers-within-pjm", caption: "Baker Botts (2025). FERC Issues Order Providing Guidance for 'Co-locating' Power Plants with Data Centers within PJM. Notes PJM's December 2025 capacity auction closed 6,600 MW short of its reserve margin.", source: "Baker Botts, December 2025" },
+  "ext-8":  { label: "Source [8] — Utility Dive / Market Monitor",  img: "", url: "https://www.utilitydive.com/news/pjm-data-center-interconnection-market-monitor-ferc-complaint/806527/", caption: "Howland, E. (2025). No more PJM data centers unless they can be reliably served: market monitor. PJM's independent market monitor filed a complaint with FERC in November 2025 stating PJM should not permit interconnection of large new data center loads if they cannot be reliably served.", source: "Utility Dive, November 26, 2025" },
+  "ext-9":  { label: "Source [9] — E&E News / Transmission Costs",  img: "", url: "https://www.eenews.net/articles/data-center-boom-sparks-sticker-shock-for-pjm-ratepayers/", caption: "E&E News (2025). Data center boom sparks sticker shock for PJM ratepayers. An analysis by the Union of Concerned Scientists found $4.3 billion in transmission expansion costs were passed on to consumers in seven PJM states in a single year.", source: "E&E News, October 3, 2025" },
+  "ext-10": { label: "Source [10] — AEP / PJM Transmission Project",img: "", url: "https://www.aep.com/news/stories/view/10048/", caption: "American Electric Power (2025). PJM selects regional transmission projects to be jointly developed by AEP, Dominion Energy, FirstEnergy. Includes ~260 miles of 765-kilovolt transmission line and two substations between Putnam County, WV and Frederick County, MD.", source: "AEP, February 27, 2025" },
+  "ext-11": { label: "Source [11] — JLARC / Data Centers in Virginia", img: "", url: "https://jlarc.virginia.gov/landing-2024-data-centers-in-virginia.asp", caption: "Joint Legislative Audit and Review Commission (2024). Data Centers in Virginia. Recommended the General Assembly expressly authorize local governments to require water use estimates and sound modeling for proposed data center developments.", source: "JLARC, December 9, 2024" },
+};
+</script>
+
+<!-- LIGHTBOX (hidden until triggered) -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-box" onclick="event.stopPropagation()">
+    <div class="lightbox-header">
+      <span class="lightbox-label" id="lb-label"></span>
+      <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">✕</button>
+    </div>
+    <div class="lightbox-img-wrap" id="lb-img-wrap"></div>
+    <div class="lightbox-caption">
+      <div class="lightbox-caption-title" id="lb-caption"></div>
+      <div class="lightbox-caption-source" id="lb-source"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-byline">Protect Frederick &nbsp;·&nbsp; Public Analysis</div>
+    <h1>Virginia Technology Park:<br>What Frederick County Residents Need to Know</h1>
+    <p class="masthead-sub">A 900 MW industrial data center campus is proposed for prime farmland in Clear Brook, Virginia. This is an analysis of what the application says, what it doesn't say, and what it permanently commits the county to before the Board of Supervisors votes.</p>
+    <div class="masthead-meta">
+      <div class="meta-item"><strong>Applicant</strong>Equus Capital Partners / Executive Land Holdings IV, LLC</div>
+      <div class="meta-item"><strong>Location</strong>Clear Brook, Frederick County, VA</div>
+      <div class="meta-item"><strong>Acreage</strong>~220 acres (RA → TM rezoning)</div>
+      <div class="meta-item"><strong>Proposed Capacity</strong>900 MW across 11 buildings</div>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="lede">
+    <p>Once the Board of Supervisors approves this rezoning, the proffers are recorded with the deed and become the permanent governing document for that land. The county cannot subsequently require additional commitments. This makes the adequacy of proffers at the time of approval the only meaningful point of public accountability in the entire development process.</p>
+    <p>The Virginia Technology Park proffers fail that test on water, noise, historic resources, fiscal impact, and grid infrastructure.</p>
+  </div>
+
+  <div class="key-facts">
+    <div class="fact"><div class="fact-number">~220</div><div class="fact-label">Acres of Prime Farmland</div></div>
+    <div class="fact"><div class="fact-number">900<span style="font-size:16px">MW</span></div><div class="fact-label">Proposed Electrical Load</div></div>
+    <div class="fact"><div class="fact-number">11</div><div class="fact-label">Data Center Buildings</div></div>
+    <div class="fact"><div class="fact-number">3</div><div class="fact-label">300 MW Substations</div></div>
+    <div class="fact"><div class="fact-number">$356K</div><div class="fact-label">One-Time Fire &amp; Rescue Payment</div></div>
+    <div class="fact"><div class="fact-number">0</div><div class="fact-label">Binding Water Use Limits</div></div>
+  </div>
+
+  <div class="accordion-group">
+
+    <!-- 01 WHAT IS THIS APPLICATION -->
+    <div class="accordion" id="acc-explainer">
+      <button class="accordion-trigger" onclick="toggle('acc-explainer')" aria-expanded="false">
+        <span class="acc-num">01</span>
+        <span class="acc-title">What Is This Application?</span>
+        <span class="acc-subtitle">Rezonings, TM districts, by-right development, and why the BOS vote is final</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+
+        <h3>What is a rezoning?</h3>
+        <p>Every parcel of land in Frederick County has a zoning designation that determines what can be built on it. The four parcels at issue here are currently zoned <strong>Rural Areas (RA)</strong>, the county's most protective agricultural designation, intended to preserve farmland and limit industrial development.</p>
+        <p>A rezoning is a request to change that designation permanently. The applicant is asking the county to change these parcels from RA to <strong>Technology Manufacturing Park (TM)</strong>. If approved, that change is recorded with the deed. It runs with the land. A future Board of Supervisors cannot simply undo it. A new rezoning application would be required, with the same full public process.</p>
+
+        <h3>What is the Technology Manufacturing Park (TM) district?</h3>
+        <p>The TM zone is Frederick County's purpose-built zoning category for data centers and related industrial technology uses. The county created it and adopted performance standards for data centers within it in April 2025. It is specifically designed to accommodate large-scale electrical and computing infrastructure, and it permits data centers, electrical substations, and associated industrial facilities as primary uses.</p>
+        <p>The TM zone requires applicants to meet certain performance standards on noise, traffic, and utilities. But those standards only govern what the county can require through the zoning ordinance itself. <strong>Any commitments beyond those baseline standards, such as water use limits, fiscal impact analysis, or grid impact review, can only be secured through proffers.</strong> And proffers are entirely voluntary: the applicant decides what to offer.</p>
+
+        <h3>What does "by-right" mean, and why does it matter?</h3>
+        <p>Once a parcel is rezoned to TM, any use that is permitted within the TM district becomes <strong>by-right</strong>, meaning it can proceed without further approval from the Board of Supervisors or the Planning Commission. The applicant submits a Master Development Plan (MDP) to the Planning Department, which reviews it for technical compliance with the zoning ordinance and the proffers. There is no second public vote. There is no opportunity for the community to weigh in again on whether the development should happen.</p>
+        <p>This is the mechanism that makes the rezoning vote so consequential. The Board of Supervisors is not approving a specific building. They are approving a permanent change to what the land is allowed to become. Everything that follows is administrative.</p>
+
+        <h3>What are proffers?</h3>
+        <p>Proffers are written commitments that an applicant voluntarily offers to the county as conditions of rezoning approval. They can cover almost anything: noise limits, water use targets, road improvements, historic preservation studies, fire and rescue contributions. Once the Board of Supervisors approves the rezoning, the proffers are recorded with the deed and become legally enforceable, but only to the extent they are written clearly and specifically.</p>
+        <p>There are two critical limitations. First, <strong>the county cannot require proffers</strong>: it can only accept or reject what the applicant volunteers. Second, <strong>proffer language that is vague or aspirational is effectively unenforceable</strong>. A proffer that says an applicant "may" do something commits them to nothing. A proffer that defers a key decision to a later stage of review cannot be enforced at that later stage. By that point the rezoning is done and so is the county's leverage.</p>
+
+        <div class="callout">
+          <div class="callout-label">Why This Matters for Virginia Technology Park</div>
+          <p>The Board of Supervisors has already rejected this applicant's proposals twice. Each time, the applicant has returned with a repackaged application. If the BOS approves this rezoning, data center development on these ~220 acres becomes by-right. The county's ability to shape, condition, or prevent that development ends at the moment of the vote.</p>
+          <p>The proffers the applicant has offered in this application are the only binding commitments the county will ever have. The sections that follow analyze each major issue: water, noise, fire and rescue, historic resources, and grid impact. Each explains specifically where those proffers fall short of the protections Frederick County residents should expect before a permanent decision is made.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 TIMELINE -->
+    <div class="accordion" id="acc-timeline">
+      <button class="accordion-trigger" onclick="toggle('acc-timeline')" aria-expanded="false">
+        <span class="acc-num">02</span>
+        <span class="acc-title">Project Timeline</span>
+        <span class="acc-subtitle">2022 Fruit Hill withdrawal → current application → decisions ahead</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+        <div class="timeline">
+          <div class="tl-item completed">
+            <div class="tl-dot"></div>
+            <div class="tl-tag tag-done">2022</div>
+            <div class="tl-date">July 25, 2022</div>
+            <div class="tl-title">"Fruit Hill" — HRAB Review</div>
+            <div class="tl-body">Equus Capital Partners submits a rezoning for three parcels (220 acres) from RA to M1/B2/OM for industrial and business uses. HRAB issues a comment letter recommending Phase II interior studies of both historic houses. <span class="cite" onclick="openCitation('hrab-2022')">[HRAB Letter, July 25, 2022]</span></div>
+          </div>
+          <div class="tl-item completed">
+            <div class="tl-dot"></div>
+            <div class="tl-tag tag-done">2023</div>
+            <div class="tl-date">2023</div>
+            <div class="tl-title">"Fruit Hill" Withdrawn</div>
+            <div class="tl-body">The Fruit Hill application is withdrawn following HRAB review and public pressure. Parcels remain zoned Rural Areas (RA).</div>
+          </div>
+          <div class="tl-item completed">
+            <div class="tl-dot"></div>
+            <div class="tl-tag tag-done">2024</div>
+            <div class="tl-date">September 2024</div>
+            <div class="tl-title">Second Attempt — Denied by BOS 4–3</div>
+            <div class="tl-body">Equus reintroduces virtually the same proposal with updated zoning designations. The Board of Supervisors votes it down 4–3 after significant public opposition.</div>
+          </div>
+          <div class="tl-item completed">
+            <div class="tl-dot"></div>
+            <div class="tl-tag tag-done">2024</div>
+            <div class="tl-date">October 2024</div>
+            <div class="tl-title">NextEra / Woodside Substation Approved by Planning Commission</div>
+            <div class="tl-body">The Planning Commission approves NextEra Energy's Woodside substation on 72 acres immediately south of the proposed Virginia Technology Park site. Substations are a by-right use on RA-zoned land.</div>
+          </div>
+          <div class="tl-item completed">
+            <div class="tl-dot"></div>
+            <div class="tl-tag tag-done">2025</div>
+            <div class="tl-date">April 2025</div>
+            <div class="tl-title">County Adopts TM-Zone Data Center Performance Standards</div>
+            <div class="tl-body">Frederick County formally adopts Technology Manufacturing Park (TM) zoning standards for data centers. This is the regulatory change that enabled the current resubmission.</div>
+          </div>
+          <div class="tl-item completed">
+            <div class="tl-dot"></div>
+            <div class="tl-tag tag-done">Nov 2025</div>
+            <div class="tl-date">November 21, 2025</div>
+            <div class="tl-title">Virginia Technology Park — HRAB Review</div>
+            <div class="tl-body">HRAB reviews the new application (originally 238.57 acres) seeking rezoning from RA to TM for 11 data center buildings <span class="cite" onclick="openCitation('gdp-c3')">[GDP Sheet C-3]</span> and three 300 MW substations.</div>
+          </div>
+          <div class="tl-item completed">
+            <div class="tl-dot"></div>
+            <div class="tl-tag tag-done">Nov 2025</div>
+            <div class="tl-date">November 21–24, 2025</div>
+            <div class="tl-title">HRAB Outcome: Parcel Removed, Minor Suggestions Only</div>
+            <div class="tl-body">The applicant announces removal of the 18.51-acre Thistle Lane parcel, reducing the project to ~220 acres. HRAB supports the Phase II historic study commitment <span class="cite" onclick="openCitation('proffer-8')">[Proffer §8]</span> but imposes no blocking conditions. Application advances in the rezoning process.</div>
+          </div>
+          <div class="tl-item active">
+            <div class="tl-dot"></div>
+            <div class="tl-tag tag-active">Current</div>
+            <div class="tl-date">Spring / Summer 2026 — estimated</div>
+            <div class="tl-title">Planning Commission Public Hearing — Date TBD</div>
+            <div class="tl-body">The application is now in the Planning Commission queue. The PC must hold at least one public hearing and deliver a recommendation to the BOS within 90 days of first referral. This is the first opportunity for formal public comment on the rezoning. The PC's vote is advisory only.</div>
+          </div>
+          <div class="tl-item decision">
+            <div class="tl-dot"></div>
+            <div class="tl-tag tag-pending">Upcoming</div>
+            <div class="tl-date">By November 2026 — statutory deadline</div>
+            <div class="tl-title">Board of Supervisors Public Hearing &amp; Vote — Date TBD</div>
+            <div class="tl-body">The BOS must hold its own public hearing and cast a binding vote within 12 months of the application being received. If approved, the proffers are recorded with the deed permanently. The county's leverage ends here. If denied, the applicant must wait 12 months before reapplying.</div>
+          </div>
+          <div class="tl-item pending">
+            <div class="tl-dot"></div>
+            <div class="tl-tag tag-pending">If Approved</div>
+            <div class="tl-date">Post-Vote</div>
+            <div class="tl-title">Master Development Plan (MDP) Submission</div>
+            <div class="tl-body">If approved, the applicant moves to MDP where specific building configurations, generator placement, and noise mitigation are finalized, within the bounds already set by the proffers. The county cannot impose new conditions at this stage.</div>
+          </div>
+        </div>
+        <div class="alert" style="margin-top:20px;">
+          <div class="alert-icon">📅</div>
+          <p><strong>Hearing dates are not yet posted.</strong> Check the Frederick County Meeting Portal at <a href="https://www.fcva.us" style="color:var(--accent);">fcva.us</a> for scheduled agendas. Written public comments submitted via the e-Comment link on the county homepage become part of the official public record.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 SHELL -->
+    <div class="accordion" id="acc-shell">
+      <button class="accordion-trigger" onclick="toggle('acc-shell')" aria-expanded="false">
+        <span class="acc-num">03</span>
+        <span class="acc-title">The Shell Company Structure</span>
+        <span class="acc-subtitle">One private equity firm controlling both sides of the transaction</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+        <p>The record owners of the four parcels are DTS, LC, William O. Minor, and David K. and Brenda S. Gray. The contract purchaser and applicant is <strong>Executive Land Holdings IV, LLC</strong>, a vehicle for Equus Capital Partners, Ltd. (Newtown Square, PA). <span class="cite" onclick="openCitation('proffer-p1')">[Proffer Statement, p.1]</span> <span class="cite" onclick="openCitation('hrab-app-p2')">[HRAB Application, p.2]</span></p>
+        <p>The application was signed by John Knott as Vice President of Executive Land Holdings IV, acting simultaneously as Attorney-in-Fact for each of the record owners. The same entity representing the buyer was also signing on behalf of the sellers. <span class="cite" onclick="openCitation('hrab-app-sig')">[HRAB Application, pp.4–4A]</span></p>
+        <p>The land use attorney of record is J. Randall Minchew of Walsh, Colucci, Lubeley & Walsh, PC. This is the same firm that represented the applicant in the prior "Fruit Hill" rezoning attempt withdrawn after HRAB review in 2022. <span class="cite" onclick="openCitation('hrab-app-p2')">[HRAB Application, p.2]</span> <span class="cite" onclick="openCitation('hrab-2022')">[HRAB Letter, July 25, 2022]</span></p>
+        <div class="callout">
+          <div class="callout-label">What This Means</div>
+          <p>The public record shows four separate property owners, but a single private equity operator controls both sides of the transaction. The actual end users are explicitly unnamed. The applicant states in their own Impact Analysis that <em>"the end users of the industrial development on the Property have not been identified."</em> <span class="cite" onclick="openCitation('impact-users')">[Impact Analysis, p.3 — End Users]</span></p>
+          <p>The county is being asked to permanently rezone ~220 acres of prime agricultural land for an industrial use whose actual operators, water demands, electrical loads, and traffic patterns are all unknown at the time of approval.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 FRUIT HILL -->
+    <div class="accordion" id="acc-rebranded">
+      <button class="accordion-trigger" onclick="toggle('acc-rebranded')" aria-expanded="false">
+        <span class="acc-num">04</span>
+        <span class="acc-title">This Is "Fruit Hill" Rebranded</span>
+        <span class="acc-subtitle">Third attempt on the same parcels, now under a new zoning category</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+        <p>The current application covers the same core parcels that were the subject of the withdrawn 2022 Fruit Hill rezoning (220.06 acres from RA to M1/B2/OM). <span class="cite" onclick="openCitation('hrab-2022')">[HRAB Letter, July 25, 2022]</span> The new application repackages the request as a rezoning to TM (Technology Manufacturing Park), originally adding one additional parcel. <span class="cite" onclick="openCitation('hrab-app-p2-3')">[HRAB Application, pp.2–3]</span></p>
+        <p>The applicant acknowledges the prior HRAB history directly, noting that Proffer #8 "incorporates the language from the previous HRAB comment letter from 2022." <span class="cite" onclick="openCitation('hrab-memo-p1')">[HRAB Cover Memo, p.1]</span> The historic preservation commitments are the minimum the applicant was already told to meet three years ago — not a new concession.</p>
+        <div class="callout">
+          <div class="callout-label">What This Means</div>
+          <p>This follows a pattern common in Virginia data center development: a private equity land acquisition vehicle assembles rural parcels, submits a rezoning that gets withdrawn or denied under public pressure, repackages with modest additions, and resubmits. The three-year gap between the Fruit Hill withdrawal and the Virginia Technology Park resubmission tracks the county's April 2025 adoption of TM-zone performance standards, which gave the applicant a cleaner regulatory pathway.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 FARMLAND -->
+    <div class="accordion" id="acc-farmland">
+      <button class="accordion-trigger" onclick="toggle('acc-farmland')" aria-expanded="false">
+        <span class="acc-num">05</span>
+        <span class="acc-title">Prime Agricultural Land</span>
+        <span class="acc-subtitle">Irreversible conversion, no agricultural mitigation in the proffers</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+        <p>The Impact Analysis acknowledges the parcels contain Frederick Poplimento Loams, Oaklet Silt Loams, and Carbo-Oaklet Silt Loams. <span class="cite" onclick="openCitation('impact-soils')">[Impact Analysis, p.2 — Soils]</span> According to the Virginia Agricultural Model map, these are labeled <strong>"prime farmland and farmland of statewide importance."</strong> <span class="cite" onclick="openCitation('impact-agmodel')">[Impact Analysis, p.2 — Ag Map]</span> The parcels also contain approximately 54 acres of woodlands. <span class="cite" onclick="openCitation('impact-woods')">[Impact Analysis, p.2 — Woodlands]</span></p>
+        <div class="stat-row">
+          <div class="stat-block"><div class="num">~220<span> ac</span></div><div class="desc">Prime farmland permanently converted to industrial use</div></div>
+          <div class="stat-block"><div class="num">$0</div><div class="desc">Agricultural land bank contribution in the proffers</div></div>
+          <div class="stat-block"><div class="num">$41.3<span>M</span></div><div class="desc">FY2027 structural county budget shortfall</div></div>
+        </div>
+        <div class="callout" style="margin-top:14px;">
+          <div class="callout-label">What This Means</div>
+          <p>The conversion is irreversible. There is no agricultural land bank contribution, no conservation easement on adjacent parcels, and no payment in lieu of agricultural preservation in the proffers. Data centers in Virginia are largely exempt from the retail sales tax on equipment under the state's data center tax incentive program, meaning the county bears the full infrastructure cost while primary tax benefits flow to the state.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 WATER -->
+    <div class="accordion" id="acc-water">
+      <button class="accordion-trigger" onclick="toggle('acc-water')" aria-expanded="false">
+        <span class="acc-num">06</span>
+        <span class="acc-title">Water Infrastructure Is Already Strained</span>
+        <span class="acc-subtitle">No binding consumption limits, existing system barely meets minimums now</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+        <p>The applicant acknowledges the area is served by a single 12-inch water main under Interstate 81. Two hydrant pressure tests on Zachary Ann Lane showed flows of only <strong>950 and 1,005 GPM</strong>, described in their own Impact Analysis as <em>"barely meeting Frederick Water's minimal flow requirements."</em> <span class="cite" onclick="openCitation('impact-water')">[Impact Analysis, p.3 — Water]</span></p>
+        <p>The applicant admits "expansion of the existing sanitary public water systems will be required for full build-out," but that "the end users of the industrial development on the Property have not been identified." <span class="cite" onclick="openCitation('impact-users')">[Impact Analysis, p.3 — End Users]</span></p>
+        <p>The proffers list four cooling strategies the applicant <strong>"may" employ</strong>. There are no binding water consumption targets, no gallons-per-day caps, and no enforceable efficiency metrics tied to occupancy permits. <span class="cite" onclick="openCitation('proffer-7d')">[Proffer §7.D]</span></p>
+        <div class="alert">
+          <div class="alert-icon">⚠</div>
+          <p><strong>The word "may" has no legal force in a proffer.</strong> An applicant who proffers that they "may" do something has committed to nothing. The county has accepted language that creates the appearance of a water commitment while guaranteeing nothing about actual water use.</p>
+        </div>
+        <div class="callout">
+          <div class="callout-label">What This Means</div>
+          <p>Existing water infrastructure is already at minimum functional capacity before a single data center comes online. A 900 MW campus will consume water at a scale that has no analog in the county's current industrial base. The absence of binding consumption commitments means this question will not be formally resolved before ground is broken.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 NOISE -->
+    <div class="accordion" id="acc-noise">
+      <button class="accordion-trigger" onclick="toggle('acc-noise')" aria-expanded="false">
+        <span class="acc-num">07</span>
+        <span class="acc-title">The Noise Assessment Is Conditional</span>
+        <span class="acc-subtitle">70 dBA modeled on a hypothetical layout, final design not yet confirmed</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+        <p>The Environmental Noise Impact Assessment concludes that "with mitigation, including a barrier on the roof, the sound level at the property line can be brought to a level at or below 70 dBA." <span class="cite" onclick="openCitation('enia-summary')">[ENIA Summary, p.1]</span> The same report explicitly states that <em>"since many assumptions about the site were made, an additional acoustical analysis of the final design will be necessary to demonstrate final compliance."</em> <span class="cite" onclick="openCitation('enia-conclusions')">[ENIA Conclusions, p.4]</span></p>
+        <p>The proffer locks in a 70 dBA property line limit. <span class="cite" onclick="openCitation('proffer-2g')">[Proffer §2.G]</span> Generator testing is restricted to weekdays 8am–5pm, <span class="cite" onclick="openCitation('proffer-2c')">[Proffer §2.C]</span> but generators may operate outside those hours in any "emergency." <span class="cite" onclick="openCitation('proffer-2d')">[Proffer §2.D]</span> The noise modeling was run on a hypothetical layout subject to change through MDP. <span class="cite" onclick="openCitation('enia-discussion')">[ENIA Discussion, p.1]</span></p>
+        <div class="alert">
+          <div class="alert-icon">⚠</div>
+          <p><strong>70 dBA sustained 24/7 is roughly equivalent to a vacuum cleaner at close range or a busy restaurant, sustained continuously around the clock.</strong> Adjacent neighborhoods include Carrollton Subdivision and Ridgeway Estates to the north, and single-family RA parcels to the west and south.</p>
+        </div>
+        <div class="callout">
+          <div class="callout-label">What This Means</div>
+          <p>The proffer establishes a standard without confirming the development can actually meet it as designed. If the final acoustical analysis reveals compliance problems after rezoning, the county's only remedy is litigation. The generator testing restriction does not address continuous mechanical noise from chillers, cooling towers, and mega-packs, which operate around the clock.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 FIRE -->
+    <div class="accordion" id="acc-fire">
+      <button class="accordion-trigger" onclick="toggle('acc-fire')" aria-expanded="false">
+        <span class="acc-num">08</span>
+        <span class="acc-title">The Fire and Rescue Contribution Is Insufficient</span>
+        <span class="acc-subtitle">$356,000 one-time payment for a 900 MW industrial campus</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+        <p>The applicant proffers <strong>$150 per 1,000 gross square feet</strong> at certificate of occupancy for each structure. <span class="cite" onclick="openCitation('proffer-6')">[Proffer §6]</span> With eleven buildings totaling ~2.375 million sq ft, the maximum one-time fire and rescue contribution is roughly <strong>$356,000</strong>, with no recurring component and no inflation mechanism beyond CPI. <span class="cite" onclick="openCitation('proffer-9')">[Proffer §9]</span></p>
+        <div class="stat-row">
+          <div class="stat-block"><div class="num">$356<span>K</span></div><div class="desc">Maximum one-time fire &amp; rescue contribution for a 900 MW campus</div></div>
+          <div class="stat-block"><div class="num">$0</div><div class="desc">Recurring training or specialized equipment funding</div></div>
+        </div>
+        <div class="callout" style="margin-top:14px;">
+          <div class="callout-label">What This Means</div>
+          <p>Frederick County's fire and rescue system will be first responder to any incident at a 900 MW campus housing sensitive electrical infrastructure, diesel generator fuel storage, and battery energy storage systems. The one-time contribution does not fund recurring training, specialized equipment, or additional response capacity. The county will bear those costs in perpetuity; the proffer addresses them once.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09 SUBSTATIONS -->
+    <div class="accordion" id="acc-substations">
+      <button class="accordion-trigger" onclick="toggle('acc-substations')" aria-expanded="false">
+        <span class="acc-num">09</span>
+        <span class="acc-title">The Substations Are Not Addressed in the Proffers</span>
+        <span class="acc-subtitle">Three 300 MW substations classified as "accessory uses" — no independent review</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+        <p>The Generalized Development Plan shows <strong>three 300 MW substations</strong> (~6 acres each). <span class="cite" onclick="openCitation('gdp-c3')">[GDP Sheet C-3]</span> <span class="cite" onclick="openCitation('gdp-c4')">[GDP Overall Plan C-4]</span> These are classified in the proffers as <em>"accessory uses"</em> customarily associated with technology industrial parks. <span class="cite" onclick="openCitation('proffer-1d')">[Proffer §1.D]</span> As accessories, they receive no independent noise, visual, or infrastructure commitments. The total 900 MW electrical draw is not analyzed for grid impact anywhere in the application package.</p>
+        <div class="alert">
+          <div class="alert-icon">⚠</div>
+          <p><strong>The entire peak electrical demand of Frederick County is estimated at 200–300 MW.</strong> This development proposes to draw three times that load, classified as an accessory use with no independent review required.</p>
+        </div>
+        <div class="callout">
+          <div class="callout-label">What This Means</div>
+          <p>The county has no basis for evaluating what this development will require from the regional transmission system, who will pay for transmission upgrades, or what the reliability implications are for existing ratepayers. No analysis has been provided, and none is required by the proffers.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 HISTORIC -->
+    <div class="accordion" id="acc-historic">
+      <button class="accordion-trigger" onclick="toggle('acc-historic')" aria-expanded="false">
+        <span class="acc-num">10</span>
+        <span class="acc-title">Historic Resources on the Property</span>
+        <span class="acc-subtitle">Two circa 1800 farmhouses: studies required, preservation outcomes are not</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+        <p>Two historic structures are on the property: the <strong>Lewis-Solenberger House</strong> (DHR #034-1463) at 384 Ruebuck Lane and the <strong>Cather House</strong> (DHR #034-1464) at 257 Ruebuck Lane, both constructed circa 1800. <span class="cite" onclick="openCitation('hrab-dhr')">[HRAB Cover Memo — DHR]</span> <span class="cite" onclick="openCitation('dhr-1463')">[DHR Survey #034-1463]</span> <span class="cite" onclick="openCitation('dhr-1464')">[DHR Survey #034-1464]</span></p>
+        <p>Both were assessed in 2022 at reconnaissance level as "recommended not eligible" for the National Register. The 2022 HRAB recommended Phase II interior studies. <span class="cite" onclick="openCitation('hrab-2022')">[HRAB Letter, July 25, 2022]</span> The current Proffer #8 commits to an Architectural Resources Study and Phase II study before the first MDP. <span class="cite" onclick="openCitation('proffer-8')">[Proffer §8]</span> <strong>Neither proffer commits to any specific outcome: preservation, recordation, or relocation, contingent on what the studies find.</strong></p>
+        <div class="callout">
+          <div class="callout-label">What This Means</div>
+          <p>Both structures are circa 1800 vernacular farmhouses with stone foundations and potentially intact interior log construction. If the Phase II study finds significant interior fabric or previously undocumented historical associations, the proffer imposes no obligation to preserve, document, or relocate either structure. The study becomes a procedural requirement with no enforceable consequence attached to its findings.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11 MISSING -->
+    <div class="accordion" id="acc-missing">
+      <button class="accordion-trigger" onclick="toggle('acc-missing')" aria-expanded="false">
+        <span class="acc-num">11</span>
+        <span class="acc-title">What the Proffers Do Not Require</span>
+        <span class="acc-subtitle">Six critical omissions from the only permanent governing document</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+        <p>The proffer statement contains none of the following commitments:</p>
+        <ul class="missing-list">
+          <li>Any binding cap on water consumption <span class="cite" onclick="openCitation('proffer-7d')">[Proffer §7.D]</span></li>
+          <li>Any commitment to identify end users prior to rezoning approval <span class="cite" onclick="openCitation('impact-users')">[Impact Analysis, p.3 — End Users]</span></li>
+          <li>Any grid impact analysis or utility coordination requirement <span class="cite" onclick="openCitation('proffer-1d')">[Proffer §1.D]</span></li>
+          <li>Any preservation or recordation commitment for the Lewis-Solenberger or Cather Houses beyond conducting studies <span class="cite" onclick="openCitation('proffer-8')">[Proffer §8]</span></li>
+          <li>Any traffic mitigation triggered by actual data center operational loads <span class="cite" onclick="openCitation('proffer-1e')">[Proffer §1.E]</span></li>
+          <li>Any fiscal impact analysis of the county's long-term cost-to-revenue ratio for this land use conversion</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 12 PROFFER FAILURES -->
+    <div class="accordion" id="acc-proffers">
+      <button class="accordion-trigger" onclick="toggle('acc-proffers')" aria-expanded="false">
+        <span class="acc-num">12</span>
+        <span class="acc-title">Why the Proffers Are Insufficient</span>
+        <span class="acc-subtitle">Four structural failures in the only binding public accountability document</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+        <p>Proffers in Virginia rezonings are a one-time negotiation. Once the BOS approves the rezoning, the proffers are recorded with the deed permanently. The Virginia Technology Park proffers fail on four structural grounds:</p>
+        <div class="failures-grid">
+          <div class="failure-card">
+            <div class="failure-num">Failure 01</div>
+            <h3>Aspirational Rather Than Enforceable</h3>
+            <p>Water minimization commitments list strategies the applicant <em>"may"</em> employ <span class="cite" onclick="openCitation('proffer-7d')">[Proffer §7.D]</span> — "may" has no legal force in a proffer. Noise compliance was modeled on a hypothetical layout <span class="cite" onclick="openCitation('enia-discussion')">[ENIA Discussion, p.1]</span>; the applicant's own consultants state a final analysis is still required after rezoning. <span class="cite" onclick="openCitation('enia-conclusions')">[ENIA Conclusions, p.4]</span></p>
+          </div>
+          <div class="failure-card">
+            <div class="failure-num">Failure 02</div>
+            <h3>Key Decisions Deferred Until After the County's Leverage Is Gone</h3>
+            <p>Building configuration, generator placement, chiller arrangement, and road alignments are all subject to MDP adjustment. <span class="cite" onclick="openCitation('proffer-1e')">[Proffer §1.E]</span> What the BOS is approving is not a development plan. It is a framework within which a plan will eventually be created, with the county's negotiating position permanently weakened once the vote is taken.</p>
+          </div>
+          <div class="failure-card">
+            <div class="failure-num">Failure 03</div>
+            <h3>One-Time Costs, Ongoing Obligations</h3>
+            <p>The $356,000 fire and rescue contribution <span class="cite" onclick="openCitation('proffer-6')">[Proffer §6]</span> is one-time with no recurring component. <span class="cite" onclick="openCitation('proffer-9')">[Proffer §9]</span> End users haven't been identified, <span class="cite" onclick="openCitation('impact-users')">[Impact Analysis, p.3 — End Users]</span>, so the county cannot evaluate actual service demands. The county will bear infrastructure costs in perpetuity; the proffer addresses them once.</p>
+          </div>
+          <div class="failure-card">
+            <div class="failure-num">Failure 04</div>
+            <h3>The Largest Elements Are Classified as Accessories</h3>
+            <p>Three 300 MW substations are classified as "accessory uses" <span class="cite" onclick="openCitation('proffer-1d')">[Proffer §1.D]</span>, receiving no independent noise, visual, or infrastructure review. The single largest infrastructure impact of this development receives no analysis and no mitigation commitment in the document that will permanently govern this land.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 13 GRID -->
+    <div class="accordion" id="acc-grid">
+      <button class="accordion-trigger" onclick="toggle('acc-grid')" aria-expanded="false">
+        <span class="acc-num">13</span>
+        <span class="acc-title">Estimated Impact to the Regional Grid</span>
+        <span class="acc-subtitle">900 MW equals REC's entire current peak demand. No grid analysis provided.</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+        <p>The Clear Brook area falls within the service territory of <strong>Rappahannock Electric Cooperative (REC)</strong>, Virginia's largest electric cooperative by line miles, with a current peak system demand of roughly <strong>948 megawatts</strong>. <span class="cite external" onclick="openCitation('ext-1')">[1]</span> The Virginia Technology Park proposes 900 MW of substation capacity <span class="cite" onclick="openCitation('gdp-c3')">[GDP Sheet C-3]</span>, roughly equivalent to REC's entire current peak demand, proposed as a single development in a single county. REC now expects up to 17 GW of data center demand by 2040, up from near zero in 2023. <span class="cite external" onclick="openCitation('ext-1')">[1]</span></p>
+        <div class="stat-row">
+          <div class="stat-block"><div class="num">17<span>GW</span></div><div class="desc">Data center demand REC expects by 2040, up from near zero in 2023 <span class="cite external" onclick="openCitation('ext-1')" style="font-size:10px;">[1]</span></div></div>
+          <div class="stat-block"><div class="num">$121<span>M</span></div><div class="desc">Cost of Dominion transmission lines to serve a comparable 900 MW project in Chesterfield County <span class="cite external" onclick="openCitation('ext-4')" style="font-size:10px;">[4]</span></div></div>
+          <div class="stat-block"><div class="num">94<span>%</span></div><div class="desc">Share of PJM's 2024–2030 peak load growth attributed to data centers <span class="cite external" onclick="openCitation('ext-3')" style="font-size:10px;">[3]</span></div></div>
+        </div>
+        <h3>The Regional Grid Is Already Under Strain</h3>
+        <ul class="missing-list">
+          <li>PJM's 2025 Long-Term Load Forecast projects 32 GW of peak load growth by 2030. Data centers account for 94% of that increase. <span class="cite external" onclick="openCitation('ext-3')">[3]</span></li>
+          <li>In PJM's most recent capacity auction, the clearing price jumped to $329.17/MW-day for 2026–2027, more than ten times the $28.92 price for 2024–2025, with those costs flowing through utilities to households and businesses. <span class="cite external" onclick="openCitation('ext-6')">[6]</span></li>
+          <li>67 million people served by PJM were hit with an extra $9.4 billion in electricity bills as proposed data centers drove up prices, with another $1.4 billion increase already locked in for the following year. <span class="cite external" onclick="openCitation('ext-5')">[5]</span></li>
+          <li>The PJM capacity auction closed 6,600 MW short of its reserve margin in December 2025. <span class="cite external" onclick="openCitation('ext-7')">[7]</span></li>
+          <li>In November 2025, PJM's independent market monitor filed a complaint with FERC stating that PJM should not permit the interconnection of large new data center loads if they cannot be served reliably. <span class="cite external" onclick="openCitation('ext-8')">[8]</span></li>
+          <li>Of Dominion's $7.6 billion in planned new transmission infrastructure, residential customers will pay 55%, including infrastructure that serves only data centers. <span class="cite external" onclick="openCitation('ext-2')">[2]</span> An analysis by the Union of Concerned Scientists found $4.3 billion in transmission expansion costs were passed on to consumers in seven PJM states in a single year. <span class="cite external" onclick="openCitation('ext-9')">[9]</span></li>
+          <li>In February 2025, PJM selected a major new transmission project jointly developed by AEP, Dominion Energy, and FirstEnergy, including ~260 miles of 765-kilovolt transmission line and two substations between Putnam County, WV and Frederick County, MD, running through or adjacent to Frederick County, VA, built specifically to address data center load growth. <span class="cite external" onclick="openCitation('ext-10')">[10]</span></li>
+        </ul>
+        <div class="callout" style="margin-top:14px;">
+          <div class="callout-label">What This Means</div>
+          <p>Frederick County residents will absorb a share of whatever transmission upgrade costs result from this development through their utility bills, with no analysis of those costs presented to the county at the time of approval. The proffer statement contains no interconnection study, no grid impact analysis, and no transmission upgrade commitment. <span class="cite" onclick="openCitation('proffer-1d')">[Proffer §1.D]</span></p>
+          <p>Virginia's JLARC recommended in December 2024 that the General Assembly authorize local governments to require water use estimates and sound modeling for data centers. <span class="cite external" onclick="openCitation('ext-11')">[11]</span> No equivalent mechanism exists for grid impact analyses. The Board of Supervisors has no formal power to compel one, and the applicant has provided none voluntarily.</p>
+        </div>
+
+        <div class="bibliography">
+          <div class="bibliography-title">Sources</div>
+          <ol class="bib-list">
+            <li class="bib-item"><span class="bib-num">[1]</span><span class="bib-text">Biller, T.E. (2025). Virginia co-op proposes path to keep data centers from boosting electric bills. <em>Richmond Times-Dispatch / Daily Progress</em>, April 11, 2025. <a href="https://dailyprogress.com/news/state-regional/business/article_32da447d-6958-57c7-9821-2bd208b3ec25.html" target="_blank" rel="noopener">↗ dailyprogress.com</a></span></li>
+            <li class="bib-item"><span class="bib-num">[2]</span><span class="bib-text">Main, I. (2025). Will special rate classes protect Va. residents from the costs of serving data centers? <em>Virginia Mercury</em>, April 25, 2025. <a href="https://virginiamercury.com/2025/04/25/will-special-rate-classes-protect-va-residents-from-the-costs-of-serving-data-centers/" target="_blank" rel="noopener">↗ virginiamercury.com</a></span></li>
+            <li class="bib-item"><span class="bib-num">[3]</span><span class="bib-text">POWWR. (2025). How Data Centers Are Reshaping PJM's Energy Market. November 10, 2025. <a href="https://www.powwr.com/blog/how-data-centers-are-reshaping-pjms-energy-market" target="_blank" rel="noopener">↗ powwr.com</a></span></li>
+            <li class="bib-item"><span class="bib-num">[4]</span><span class="bib-text">Data Center Dynamics. (2025). Dominion to build new high voltage lines to supply proposed 900MW data center in Chesterfield County, Virginia. March 2025. <a href="https://www.datacenterdynamics.com/en/news/dominion-to-build-new-high-voltage-lines-to-supply-proposed-900mw-data-center-in-chesterfield-county-virginia/" target="_blank" rel="noopener">↗ datacenterdynamics.com</a></span></li>
+            <li class="bib-item"><span class="bib-num">[5]</span><span class="bib-text">Rutigliano, T. and Lang-Ree, C. (2025). Solving PJM's data center problem. <em>Utility Dive</em>, December 2, 2025. <a href="https://www.utilitydive.com/news/solving-pjms-data-center-problem/805600/" target="_blank" rel="noopener">↗ utilitydive.com</a></span></li>
+            <li class="bib-item"><span class="bib-num">[6]</span><span class="bib-text">Eberhart, M. (2025). States and residents push back on PJM data center decisions. <em>Technical.ly</em>, December 5, 2025. <a href="https://technical.ly/civics/pjm-data-center-electric-grid-ferc-proposal/" target="_blank" rel="noopener">↗ technical.ly</a></span></li>
+            <li class="bib-item"><span class="bib-num">[7]</span><span class="bib-text">Baker Botts. (2025). FERC Issues Order Providing Guidance for "Co-locating" Power Plants with Data Centers within PJM. December 2025. <a href="https://www.bakerbotts.com/thought-leadership/publications/2025/december/ferc-issues-order-providing-guidance-for-co-locating-power-plants-with-data-centers-within-pjm" target="_blank" rel="noopener">↗ bakerbotts.com</a></span></li>
+            <li class="bib-item"><span class="bib-num">[8]</span><span class="bib-text">Howland, E. (2025). No more PJM data centers unless they can be reliably served: market monitor. <em>Utility Dive</em>, November 26, 2025. <a href="https://www.utilitydive.com/news/pjm-data-center-interconnection-market-monitor-ferc-complaint/806527/" target="_blank" rel="noopener">↗ utilitydive.com</a></span></li>
+            <li class="bib-item"><span class="bib-num">[9]</span><span class="bib-text">E&amp;E News. (2025). Data center boom sparks sticker shock for PJM ratepayers. October 3, 2025. <a href="https://www.eenews.net/articles/data-center-boom-sparks-sticker-shock-for-pjm-ratepayers/" target="_blank" rel="noopener">↗ eenews.net</a></span></li>
+            <li class="bib-item"><span class="bib-num">[10]</span><span class="bib-text">American Electric Power. (2025). PJM selects regional transmission projects to be jointly developed by American Electric Power, Dominion Energy, FirstEnergy. February 27, 2025. <a href="https://www.aep.com/news/stories/view/10048/" target="_blank" rel="noopener">↗ aep.com</a></span></li>
+            <li class="bib-item"><span class="bib-num">[11]</span><span class="bib-text">Joint Legislative Audit and Review Commission. (2024). Data Centers in Virginia. December 9, 2024. <a href="https://jlarc.virginia.gov/landing-2024-data-centers-in-virginia.asp" target="_blank" rel="noopener">↗ jlarc.virginia.gov</a></span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 WHAT YOU CAN DO -->
+    <div class="accordion" id="acc-action">
+      <button class="accordion-trigger" onclick="toggle('acc-action')" aria-expanded="false">
+        <span class="acc-num">14</span>
+        <span class="acc-title">What You Can Do</span>
+        <span class="acc-subtitle">How to make your voice part of the official public record</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg>
+      </button>
+      <div class="accordion-body">
+
+        <p>The rezoning process has two formal public hearings: one before the Planning Commission and one before the Board of Supervisors. Both are opportunities to put your concerns on the official record. The BOS hearing is the binding vote. Here is how to participate at each stage.</p>
+
+        <div class="action-grid">
+
+          <div class="action-card primary">
+            <div class="action-step">Do This Now</div>
+            <div class="action-title">Submit a Written Comment</div>
+            <div class="action-desc">Written comments submitted via the county's e-Comment system become part of the official public record for this application, even before a hearing date is set. You don't need to attend in person. Comments are provided to the Planning Commission and Board of Supervisors before they vote.</div>
+            <a class="action-link" href="https://www.fcva.us/government/meeting-portal" target="_blank" rel="noopener">Submit via fcva.us Meeting Portal ↗</a>
+          </div>
+
+          <div class="action-card primary">
+            <div class="action-step">Do This Now</div>
+            <div class="action-title">Sign Up for Hearing Notifications</div>
+            <div class="action-desc">The Planning Commission hearing date has not been announced. Sign up for e-notifications from Frederick County so you know the moment it's posted. You'll also receive notification before the Board of Supervisors hearing.</div>
+            <a class="action-link" href="https://www.fcva.us/services/sign-up-for-e-notifications" target="_blank" rel="noopener">Sign up at fcva.us ↗</a>
+          </div>
+
+          <div class="action-card">
+            <div class="action-step">Planning Commission Hearing — Date TBD</div>
+            <div class="action-title">Speak at the Planning Commission</div>
+            <div class="action-desc">Individuals are allotted 3 minutes to speak. You must state your name and address. The PC's recommendation is advisory, but a strong public record here matters. Hearings are held at 107 N. Kent Street, Winchester, VA.</div>
+            <a class="action-link" href="https://www.fcva.us/departments/planning-development/boards-committees/planning-commission" target="_blank" rel="noopener">Planning Commission info ↗</a>
+          </div>
+
+          <div class="action-card">
+            <div class="action-step">BOS Hearing — Date TBD</div>
+            <div class="action-title">Speak at the Board of Supervisors</div>
+            <div class="action-desc">This is the binding vote. The BOS meets the 2nd and 4th Wednesdays at 7 p.m. at 107 N. Kent Street. Two citizen comment periods are held at every regular meeting. For public hearings on rezoning applications, you may speak directly to the application.</div>
+            <a class="action-link" href="https://www.fcva.us/departments/board-of-supervisors" target="_blank" rel="noopener">Board of Supervisors info ↗</a>
+          </div>
+
+          <div class="action-card">
+            <div class="action-step">Anytime</div>
+            <div class="action-title">Contact Your Supervisor Directly</div>
+            <div class="action-desc">Each supervisor represents a magisterial district. The project site is in the <strong>Stonewall District</strong>. All seven supervisors will vote on this application. Find your district and contact your representative directly. Phone calls and emails both carry weight.</div>
+            <a class="action-link" href="https://www.fcva.us/services/contact-my-board-representative" target="_blank" rel="noopener">Find your supervisor ↗</a>
+          </div>
+
+          <div class="action-card">
+            <div class="action-step">Anytime</div>
+            <div class="action-title">Share This Page</div>
+            <div class="action-desc">The more residents who understand what's at stake before the vote, the stronger the public record. Share this analysis with neighbors, community groups, and local media. The Planning Commission hearing is the first public opportunity, and it can arrive with little notice.</div>
+            <a class="action-link" href="https://protectfrederick.org" target="_blank" rel="noopener">protectfrederick.org ↗</a>
+          </div>
+
+        </div>
+
+        <h3>Your Board of Supervisors</h3>
+        <p>All seven supervisors will vote on this rezoning application. The project site is in the <strong>Stonewall District</strong>, currently represented by Gary Oates. Use the county's district finder to confirm your representative.</p>
+
+        <div class="supervisor-grid">
+          <div class="supervisor-card">
+            <div class="sup-name">John Jewell</div>
+            <div class="sup-district">Chairman At-Large</div>
+          </div>
+          <div class="supervisor-card">
+            <div class="sup-name">Gary Oates</div>
+            <div class="sup-district stonewall">Stonewall District ★</div>
+          </div>
+          <div class="supervisor-card">
+            <div class="sup-name">Jason Aikens</div>
+            <div class="sup-district">Gainesboro District</div>
+          </div>
+          <div class="supervisor-card">
+            <div class="sup-name">Mike Guevremont</div>
+            <div class="sup-district">Red Bud District</div>
+          </div>
+          <div class="supervisor-card">
+            <div class="sup-name">Albert Orndorff</div>
+            <div class="sup-district">Back Creek District</div>
+          </div>
+          <div class="supervisor-card">
+            <div class="sup-name">Robert Wells</div>
+            <div class="sup-district">Opequon District</div>
+          </div>
+          <div class="supervisor-card">
+            <div class="sup-name">Robert Liero</div>
+            <div class="sup-district">Shawnee District</div>
+          </div>
+        </div>
+
+        <div class="alert" style="margin-top: 20px;">
+          <div class="alert-icon">📋</div>
+          <p>Not sure which district you're in? Use the <a href="https://www.fcva.us/departments/board-of-supervisors/board-members-and-contact-info/find-your-magisterial-district" target="_blank" rel="noopener" style="color:var(--accent);">county's district finder</a> to look up your magisterial district by address.</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- end accordion-group -->
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-org">Protect Frederick</div>
+      <div>Frederick County, Virginia</div>
+      <div style="margin-top:6px;"><a href="https://protectfrederick.org">protectfrederick.org</a></div>
+    </div>
+    <div style="max-width:380px; line-height:1.6;">
+      This analysis is based on publicly available application documents submitted to the Frederick County Historic Resources Advisory Board, including the Proffer Statement, HRAB Application, Impact Analysis Statement, Environmental Noise Impact Assessment, and Generalized Development Plan for the Virginia Technology Park rezoning application.
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── ACCORDION ── */
+  function toggle(id) {
+    const el = document.getElementById(id);
+    const isOpen = el.classList.contains('open');
+    el.classList.toggle('open', !isOpen);
+    el.querySelector('.accordion-trigger').setAttribute('aria-expanded', String(!isOpen));
+  }
+
+  /* ── LIGHTBOX ── */
+  function openCitation(key) {
+    const c = CITATIONS[key];
+    if (!c) return;
+
+    document.getElementById('lb-label').textContent = c.label;
+    document.getElementById('lb-caption').textContent = c.caption;
+    document.getElementById('lb-source').textContent = 'Source: ' + c.source;
+
+    const wrap = document.getElementById('lb-img-wrap');
+    if (c.img) {
+      wrap.innerHTML = '<img src="' + c.img + '" alt="' + c.label + '">';
+    } else if (c.url) {
+      // External source — show link to open in new tab
+      wrap.innerHTML =
+        '<div class="lightbox-placeholder">' +
+          '<div class="ph-icon">🔗</div>' +
+          '<div style="font-weight:600;color:var(--ink-soft);">External Source</div>' +
+          '<a href="' + c.url + '" target="_blank" rel="noopener" style="font-size:13px;color:var(--accent);word-break:break-all;max-width:480px;text-align:center;text-decoration:underline;">' + c.url + '</a>' +
+          '<a href="' + c.url + '" target="_blank" rel="noopener" style="margin-top:8px;display:inline-block;font-family:var(--sans);font-size:12px;font-weight:600;background:var(--ink);color:#fff;padding:7px 18px;text-decoration:none;letter-spacing:0.04em;">Open Article ↗</a>' +
+        '</div>';
+    } else {
+      // ── PLACEHOLDER: swap img filename in CITATIONS above when ready ──
+      wrap.innerHTML =
+        '<div class="lightbox-placeholder">' +
+          '<div class="ph-icon">🖼</div>' +
+          '<div>Screenshot not yet attached</div>' +
+          '<code>' + key + '.png</code>' +
+          '<div style="font-size:12px;color:var(--ink-muted);max-width:320px;margin-top:4px;">' +
+            'To add: set <strong>img</strong> for <strong>"' + key + '"</strong> in the CITATIONS registry at the top of this file.' +
+          '</div>' +
+        '</div>';
+    }
+
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(e) {
+    if (e && e.target !== document.getElementById('lightbox') && e.type !== 'click') return;
+    if (e && e.currentTarget === document.getElementById('lightbox') && e.target !== e.currentTarget) return;
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+
+</body>
+</html>
